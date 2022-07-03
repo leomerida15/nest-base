@@ -14,12 +14,24 @@ const typeorm_1 = require("@nestjs/typeorm");
 const Users_db_1 = require("./entity/Users.db");
 const Rols_db_1 = require("./entity/Rols.db");
 const Permissions_db_1 = require("./entity/Permissions.db");
+const config_1 = require("@nestjs/config");
+const jwt_strategy_1 = require("./guards/jwt/jwt.strategy");
+const jwt_1 = require("@nestjs/jwt");
 let PeopleModule = class PeopleModule {
 };
 PeopleModule = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forFeature([Users_db_1.UsersDB, Rols_db_1.RolsDB, Permissions_db_1.PermissionsDB])],
-        providers: [auth_service_1.AuthService],
+        imports: [
+            typeorm_1.TypeOrmModule.forFeature([Users_db_1.UsersDB, Rols_db_1.RolsDB, Permissions_db_1.PermissionsDB]),
+            jwt_1.JwtModule.registerAsync({
+                inject: [config_1.ConfigService],
+                useFactory: (configService) => ({
+                    secret: configService.get("jwt").key,
+                    signOptions: configService.get("jwt").options,
+                }),
+            }),
+        ],
+        providers: [auth_service_1.AuthService, jwt_strategy_1.JwtStrategy],
         controllers: [auth_controller_1.AuthController],
     })
 ], PeopleModule);

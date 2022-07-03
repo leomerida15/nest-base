@@ -5,6 +5,7 @@ specifiers:
   '@nestjs/common': ^8.0.0
   '@nestjs/config': ^2.1.0
   '@nestjs/core': ^8.0.0
+  '@nestjs/jwt': ^8.0.1
   '@nestjs/passport': ^8.2.2
   '@nestjs/platform-express': ^8.0.0
   '@nestjs/platform-fastify': ^8.4.7
@@ -56,6 +57,7 @@ dependencies:
   '@nestjs/common': 8.4.7_kgmvgmqc4iohdboj3f7yqhrie4
   '@nestjs/config': 2.1.0_g7av3gvncewo44y4rurz3mgav4
   '@nestjs/core': 8.4.7_fkqgj3xrohk2pflugljc4sz7ea
+  '@nestjs/jwt': 8.0.1_@nestjs+common@8.4.7
   '@nestjs/passport': 8.2.2_ajebcnomotz225cztrmzhvaeiq
   '@nestjs/platform-express': 8.4.7_7tsmhnugyerf5okgqzer2mfqme
   '@nestjs/platform-fastify': 8.4.7_7tsmhnugyerf5okgqzer2mfqme
@@ -945,6 +947,16 @@ packages:
       uuid: 8.3.2
     transitivePeerDependencies:
       - encoding
+
+  /@nestjs/jwt/8.0.1_@nestjs+common@8.4.7:
+    resolution: {integrity: sha512-9WGfgngX8aclC/MC+CH35Ooo4iPVKc+7xLXaBV6o4ty8g2uZdPomry7cSdK/e6Lv623O/84WapThnPoAtW/jvA==}
+    peerDependencies:
+      '@nestjs/common': ^6.0.0 || ^7.0.0 || ^8.0.0
+    dependencies:
+      '@nestjs/common': 8.4.7_kgmvgmqc4iohdboj3f7yqhrie4
+      '@types/jsonwebtoken': 8.5.8
+      jsonwebtoken: 8.5.1
+    dev: false
 
   /@nestjs/mapped-types/1.0.1_7zw7e46jhcfuw5vwuwho2brjki:
     resolution: {integrity: sha512-NFvofzSinp00j5rzUd4tf+xi9od6383iY0JP7o0Bnu1fuItAUkWBgc4EKuIQ3D+c2QI3i9pG1kDWAeY27EMGtg==}

@@ -1,8 +1,5 @@
 declare const _default: () => {
     db: import("@nestjs/typeorm").TypeOrmModuleOptions;
-    jwt: {
-        key: import("jsonwebtoken").Secret;
-        options: import("jsonwebtoken").SignOptions;
-    };
+    jwt: import("./types").JwtConfig<import("jsonwebtoken").Secret>;
 };
 export default _default;

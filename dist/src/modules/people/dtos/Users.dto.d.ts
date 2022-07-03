@@ -9,3 +9,6 @@ export declare class UsersLoginDTO extends BaseDTO {
     email: string;
     password: string;
 }
+export declare class UsersJwtDTO extends BaseDTO {
+    email: string;
+}

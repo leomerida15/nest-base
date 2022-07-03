@@ -6,7 +6,7 @@ export declare class AuthController {
     registerUser(user: UsersRegisterDTO): Promise<{
         msg: string;
         info: UsersRegisterDTO & import("../entity/Users.db").UsersDB;
-        token: void;
+        token: string;
     }>;
     login(user: UsersLoginDTO): Promise<{
         msg: string;
@@ -20,6 +20,10 @@ export declare class AuthController {
             createdDate?: Date;
             updatedDate?: Date;
         };
-        token: void;
+        token: string;
+    }>;
+    all(): Promise<{
+        msg: string;
+        info: import("../entity/Users.db").UsersDB[];
     }>;
 }

@@ -1,13 +1,8 @@
 /** @format */
 
-import jwt from "jsonwebtoken";
+import { FuncJwtConfig } from "./types";
 
-type RespJwtConfig = () => {
-	key: jwt.Secret;
-	options: jwt.SignOptions;
-};
-
-const jwtConfig: RespJwtConfig = () => ({
+const jwtConfig: FuncJwtConfig = () => ({
 	key: process.env.JWT_KEY,
 	options: { expiresIn: process.env.JWT_EXP },
 });

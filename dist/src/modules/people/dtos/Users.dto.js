@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UsersLoginDTO = exports.UsersRegisterDTO = void 0;
+exports.UsersJwtDTO = exports.UsersLoginDTO = exports.UsersRegisterDTO = void 0;
 const class_transformer_1 = require("class-transformer");
 const class_validator_1 = require("class-validator");
 const Base_dto_1 = require("../../../utils/Base.dto");
@@ -53,4 +53,12 @@ __decorate([
     __metadata("design:type", String)
 ], UsersLoginDTO.prototype, "password", void 0);
 exports.UsersLoginDTO = UsersLoginDTO;
+class UsersJwtDTO extends Base_dto_1.BaseDTO {
+}
+__decorate([
+    (0, class_validator_1.IsEmail)(),
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", String)
+], UsersJwtDTO.prototype, "email", void 0);
+exports.UsersJwtDTO = UsersJwtDTO;
 //# sourceMappingURL=Users.dto.js.map

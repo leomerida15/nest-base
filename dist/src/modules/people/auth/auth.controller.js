@@ -16,20 +16,23 @@ exports.AuthController = void 0;
 const common_1 = require("@nestjs/common");
 const swagger_1 = require("@nestjs/swagger");
 const Users_dto_1 = require("../dtos/Users.dto");
+const jwt_auth_guard_1 = require("../guards/jwt/jwt-auth.guard");
 const auth_service_1 = require("./auth.service");
 let AuthController = class AuthController {
     constructor(authService) {
         this.authService = authService;
     }
     async registerUser(user) {
-        const info = await this.authService.registerUser(user);
-        const token = this.authService.createJWT(info);
+        const { info, token } = await this.authService.registerUser(user);
         return { msg: "register ok", info, token };
     }
     async login(user) {
-        const info = await this.authService.loginUser(user);
-        const token = this.authService.createJWT(info);
-        return { msg: "register ok", info, token };
+        const { info, token } = await this.authService.loginUser(user);
+        return { msg: "login ok", info, token };
+    }
+    async all() {
+        const info = await this.authService.allUsers();
+        return { msg: "all users ok", info };
     }
 };
 __decorate([
@@ -48,6 +51,14 @@ __decorate([
     __metadata("design:paramtypes", [Users_dto_1.UsersLoginDTO]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "login", null);
+__decorate([
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
+    (0, common_1.Get)("all"),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], AuthController.prototype, "all", null);
 AuthController = __decorate([
     (0, swagger_1.ApiTags)("auth"),
     (0, common_1.Controller)("auth"),

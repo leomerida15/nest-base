@@ -19,6 +19,7 @@ async function bootstrap() {
 
 	// swagger
 	const swaggerConfig = new DocumentBuilder()
+		.addBearerAuth()
 		.setTitle("Academy Api")
 		.setDescription("The academy API description")
 		.setVersion("1.0")

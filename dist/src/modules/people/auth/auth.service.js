@@ -29,30 +29,35 @@ const typeorm_1 = require("typeorm");
 const Users_db_1 = require("../entity/Users.db");
 const typeorm_2 = require("@nestjs/typeorm");
 const bcrypt_1 = require("bcrypt");
-const jsonwebtoken_1 = require("jsonwebtoken");
-const config_1 = require("@nestjs/config");
+const jwt_1 = require("@nestjs/jwt");
 let AuthService = class AuthService {
-    constructor(getUsers, configService) {
+    constructor(getUsers, jwtService) {
         this.getUsers = getUsers;
-        this.configService = configService;
-    }
-    createJWT(payload) {
-        const { key, options } = this.configService.get("jwt");
-        const token = jsonwebtoken_1.default.sign(payload, key, options);
+        this.jwtService = jwtService;
     }
     async registerUser(user) {
         user.password = (0, bcrypt_1.hashSync)(user.password, 10);
-        const resp = await this.getUsers.save(user);
-        delete resp.password;
-        return resp;
+        const info = await this.getUsers.save(user);
+        delete info.password;
+        const { id } = info;
+        const token = this.jwtService.sign({ id });
+        return { info, token };
     }
     async loginUser(user) {
         const { email } = user;
         const userDB = await this.getUsers.findOne({ where: { email } });
+        if (!userDB)
+            throw new common_1.HttpException("usern_not_found", common_1.HttpStatus.NOT_FOUND);
         const { password } = userDB, info = __rest(userDB, ["password"]);
         const validPass = (0, bcrypt_1.compareSync)(user.password, password);
         if (!validPass)
-            throw new common_1.HttpException("error password", 403);
+            throw new common_1.HttpException("password_invalid", common_1.HttpStatus.FORBIDDEN);
+        const { id } = info;
+        const token = this.jwtService.sign({ id });
+        return { info, token };
+    }
+    async allUsers() {
+        const info = await this.getUsers.find();
         return info;
     }
 };
@@ -60,7 +65,7 @@ AuthService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_2.InjectRepository)(Users_db_1.UsersDB)),
     __metadata("design:paramtypes", [typeorm_1.Repository,
-        config_1.ConfigService])
+        jwt_1.JwtService])
 ], AuthService);
 exports.AuthService = AuthService;
 //# sourceMappingURL=auth.service.js.map

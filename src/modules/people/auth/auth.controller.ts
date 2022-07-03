@@ -1,8 +1,9 @@
 /** @format */
 
-import { Body, Controller, Post } from "@nestjs/common";
-import { ApiBody, ApiTags } from "@nestjs/swagger";
+import { Body, Controller, Get, Post, UseGuards } from "@nestjs/common";
+import { ApiBearerAuth, ApiBody, ApiTags } from "@nestjs/swagger";
 import { UsersLoginDTO, UsersRegisterDTO } from "../dtos/Users.dto";
+import { JwtAuthGuard } from "../guards/jwt/jwt-auth.guard";
 import { AuthService } from "./auth.service";
 
 @ApiTags("auth")
@@ -13,9 +14,7 @@ export class AuthController {
 	@ApiBody({ type: UsersRegisterDTO })
 	@Post("register")
 	async registerUser(@Body() user: UsersRegisterDTO) {
-		const info = await this.authService.registerUser(user);
-
-		const token = this.authService.createJWT(info);
+		const { info, token } = await this.authService.registerUser(user);
 
 		return { msg: "register ok", info, token };
 	}
@@ -23,10 +22,17 @@ export class AuthController {
 	@ApiBody({ type: UsersLoginDTO })
 	@Post("login")
 	async login(@Body() user: UsersLoginDTO) {
-		const info = await this.authService.loginUser(user);
+		const { info, token } = await this.authService.loginUser(user);
 
-		const token = this.authService.createJWT(info);
+		return { msg: "login ok", info, token };
+	}
 
-		return { msg: "register ok", info, token };
+	@ApiBearerAuth()
+	@UseGuards(JwtAuthGuard)
+	@Get("all")
+	async all() {
+		const info = await this.authService.allUsers();
+
+		return { msg: "all users ok", info };
 	}
 }

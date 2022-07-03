@@ -10,6 +10,7 @@ async function bootstrap() {
     app.setGlobalPrefix("v1");
     app.useGlobalPipes(new common_1.ValidationPipe());
     const swaggerConfig = new swagger_1.DocumentBuilder()
+        .addBearerAuth()
         .setTitle("Academy Api")
         .setDescription("The academy API description")
         .setVersion("1.0")

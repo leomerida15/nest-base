@@ -36,3 +36,9 @@ export class UsersLoginDTO extends BaseDTO {
 	@ApiProperty({ description: "8-15 length, A-Z, a-z, 0-9 y spechial caracter" })
 	password: string;
 }
+
+export class UsersJwtDTO extends BaseDTO {
+	@IsEmail()
+	@ApiProperty()
+	email: string;
+}

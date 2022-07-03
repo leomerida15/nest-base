@@ -1,46 +1,53 @@
 /** @format */
 
-import { HttpException, Injectable } from "@nestjs/common";
+import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { Repository } from "typeorm";
 import { UsersLoginDTO, UsersRegisterDTO } from "../dtos/Users.dto";
 import { UsersDB } from "../entity/Users.db";
 import { InjectRepository } from "@nestjs/typeorm";
 import { compareSync, hashSync } from "bcrypt";
-import jwt from "jsonwebtoken";
-import { ConfigService } from "@nestjs/config";
+import { JwtService } from "@nestjs/jwt";
+
 @Injectable()
 export class AuthService {
 	constructor(
 		@InjectRepository(UsersDB)
 		private getUsers: Repository<UsersDB>,
-		private configService: ConfigService,
+		private readonly jwtService: JwtService,
 	) {}
 
-	public createJWT(payload) {
-		const { key, options } = this.configService.get("jwt");
-
-		const token = jwt.sign(payload, key, options);
-	}
-
-	async registerUser(user: UsersRegisterDTO) {
+	public async registerUser(user: UsersRegisterDTO) {
 		user.password = hashSync(user.password, 10);
 
-		const resp = await this.getUsers.save(user);
+		const info = await this.getUsers.save(user);
 
-		delete resp.password;
+		delete info.password;
 
-		return resp;
+		const { id } = info;
+		const token = this.jwtService.sign({ id });
+
+		return { info, token };
 	}
 
-	async loginUser(user: UsersLoginDTO) {
+	public async loginUser(user: UsersLoginDTO) {
 		const { email } = user;
 		const userDB = await this.getUsers.findOne({ where: { email } });
+		if (!userDB) throw new HttpException("usern_not_found", HttpStatus.NOT_FOUND);
 
 		const { password, ...info } = userDB;
 
 		const validPass = compareSync(user.password, password);
 
-		if (!validPass) throw new HttpException("error password", 403);
+		if (!validPass) throw new HttpException("password_invalid", HttpStatus.FORBIDDEN);
+
+		const { id } = info;
+		const token = this.jwtService.sign({ id });
+
+		return { info, token };
+	}
+
+	public async allUsers() {
+		const info = await this.getUsers.find();
 
 		return info;
 	}
