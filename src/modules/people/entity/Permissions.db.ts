@@ -2,7 +2,7 @@
 
 import { Transform } from "class-transformer";
 import { IsString } from "class-validator";
-import { BaseDB } from "src/utils/Base.db";
+import { BaseDB } from "../../../utils/Base.db";
 import { Column, Entity, JoinTable, ManyToMany } from "typeorm";
 import { RolsDB } from "./Rols.db";
 

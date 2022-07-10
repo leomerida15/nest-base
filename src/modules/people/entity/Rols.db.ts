@@ -3,7 +3,7 @@
 import { Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToMany } from "typeorm";
 import { Transform } from "class-transformer";
 import { IsString } from "class-validator";
-import { BaseDB } from "src/utils/Base.db";
+import { BaseDB } from "../../../utils/Base.db";
 import { PermissionsDB } from "./Permissions.db";
 import { UsersDB } from "./Users.db";
 

@@ -3,14 +3,14 @@ import { UsersLoginDTO, UsersRegisterDTO } from "../dtos/Users.dto";
 import { UsersDB } from "../entity/Users.db";
 import { JwtService } from "@nestjs/jwt";
 export declare class AuthService {
-    private getUsers;
+    private readonly getUsers;
     private readonly jwtService;
     constructor(getUsers: Repository<UsersDB>, jwtService: JwtService);
-    registerUser(user: UsersRegisterDTO): Promise<{
+    createUser(user: UsersRegisterDTO): Promise<{
         info: UsersRegisterDTO & UsersDB;
-        token: string;
+        accesstoken: string;
     }>;
-    loginUser(user: UsersLoginDTO): Promise<{
+    validUser(user: UsersLoginDTO): Promise<{
         info: {
             email: string;
             firsName: string;
@@ -21,7 +21,7 @@ export declare class AuthService {
             createdDate?: Date;
             updatedDate?: Date;
         };
-        token: string;
+        accesstoken: string;
     }>;
     allUsers(): Promise<UsersDB[]>;
 }

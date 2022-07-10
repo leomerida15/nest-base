@@ -1,6 +1,5 @@
 /** @format */
 
-import { Logger } from "@nestjs/common";
 import {
 	registerDecorator,
 	ValidationOptions,
@@ -14,8 +13,6 @@ import {
 type types = Array<
 	"object" | "number" | "string" | "function" | "promise" | "null" | "undefined" | any
 >;
-
-const logger = new Logger();
 
 const validType = (types: types, value: any) => {
 	//
@@ -59,26 +56,3 @@ export const IsTypes = (types: Array<any>, validationOptions?: ValidationOptions
 		});
 	};
 };
-
-export const IsPass =
-	(constraints?: any, validationOptions?: ValidationOptions) =>
-	(object: Object, propertyName: string) => {
-		registerDecorator({
-			name: "isTypes",
-			target: object.constructor,
-			propertyName: propertyName,
-			constraints: [constraints],
-			options: validationOptions,
-			validator: {
-				validate(value: any, args: ValidationArguments) {
-					const regex =
-						/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?\.&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/;
-
-					return regex.test(value);
-				},
-				defaultMessage() {
-					return "password error format";
-				},
-			},
-		});
-	};

@@ -28,33 +28,33 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("typeorm");
 const Users_db_1 = require("../entity/Users.db");
 const typeorm_2 = require("@nestjs/typeorm");
-const bcrypt_1 = require("bcrypt");
+const bcrypt = require("bcrypt");
 const jwt_1 = require("@nestjs/jwt");
 let AuthService = class AuthService {
     constructor(getUsers, jwtService) {
         this.getUsers = getUsers;
         this.jwtService = jwtService;
     }
-    async registerUser(user) {
-        user.password = (0, bcrypt_1.hashSync)(user.password, 10);
+    async createUser(user) {
+        user.password = bcrypt.hashSync(user.password, 10);
         const info = await this.getUsers.save(user);
         delete info.password;
         const { id } = info;
-        const token = this.jwtService.sign({ id });
-        return { info, token };
+        const accesstoken = this.jwtService.sign({ id });
+        return { info, accesstoken };
     }
-    async loginUser(user) {
+    async validUser(user) {
         const { email } = user;
         const userDB = await this.getUsers.findOne({ where: { email } });
         if (!userDB)
             throw new common_1.HttpException("usern_not_found", common_1.HttpStatus.NOT_FOUND);
         const { password } = userDB, info = __rest(userDB, ["password"]);
-        const validPass = (0, bcrypt_1.compareSync)(user.password, password);
+        const validPass = bcrypt.compareSync(user.password, password);
         if (!validPass)
             throw new common_1.HttpException("password_invalid", common_1.HttpStatus.FORBIDDEN);
         const { id } = info;
-        const token = this.jwtService.sign({ id });
-        return { info, token };
+        const accesstoken = this.jwtService.sign({ id });
+        return { info, accesstoken };
     }
     async allUsers() {
         const info = await this.getUsers.find();

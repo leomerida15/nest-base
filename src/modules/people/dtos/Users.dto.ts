@@ -2,10 +2,9 @@
 
 import { Transform } from "class-transformer";
 import { IsEmail, IsString } from "class-validator";
-import { BaseDTO } from "src/utils/Base.dto";
-import { IsPass } from "src/utils/decorations.DC";
 import { ApiProperty } from "@nestjs/swagger";
-import { hashSync } from "bcrypt";
+import { BaseDTO } from "../../../utils/dto/Base.dto";
+import { IsPass } from "../../../utils/decorations";
 
 export class UsersRegisterDTO extends BaseDTO {
 	@IsEmail()

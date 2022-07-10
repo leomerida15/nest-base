@@ -1,4 +1,4 @@
-import { BaseDTO } from "src/utils/Base.dto";
+import { BaseDTO } from "../../../utils/dto/Base.dto";
 export declare class UsersRegisterDTO extends BaseDTO {
     email: string;
     firsName: string;

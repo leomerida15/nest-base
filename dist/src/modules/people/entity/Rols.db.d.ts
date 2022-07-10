@@ -1,4 +1,4 @@
-import { BaseDB } from "src/utils/Base.db";
+import { BaseDB } from "../../../utils/Base.db";
 import { PermissionsDB } from "./Permissions.db";
 import { UsersDB } from "./Users.db";
 export declare class RolsDB extends BaseDB {

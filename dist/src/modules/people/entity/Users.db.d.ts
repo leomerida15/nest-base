@@ -1,6 +1,6 @@
 import { BaseDB } from "../../../utils/Base.db";
 import { RolsDB } from "./Rols.db";
-import { CoursesDB } from "src/modules/courses/entity/Courses.db";
+import { CoursesDB } from "../../courses/entity/Courses.db";
 export declare class UsersDB extends BaseDB {
     email: string;
     firsName: string;

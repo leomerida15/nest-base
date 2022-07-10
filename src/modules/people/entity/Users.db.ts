@@ -5,7 +5,7 @@ import { Column, Entity, Index, JoinTable, ManyToMany, ManyToOne } from "typeorm
 import { BaseDB } from "../../../utils/Base.db";
 import { Transform } from "class-transformer";
 import { RolsDB } from "./Rols.db";
-import { CoursesDB } from "src/modules/courses/entity/Courses.db";
+import { CoursesDB } from "../../courses/entity/Courses.db";
 
 @Entity()
 @Index(["id", "email"], { unique: true })
