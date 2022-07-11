@@ -17,6 +17,7 @@ import { JwtStrategy } from "./guards/jwt/jwt.strategy";
 // JWT
 import { JwtModule } from "@nestjs/jwt";
 import { JwtConfig } from "src/config/types";
+import { MailService } from './mail/mail.service';
 
 @Module({
 	imports: [
@@ -29,7 +30,7 @@ import { JwtConfig } from "src/config/types";
 			}),
 		}),
 	],
-	providers: [AuthService, JwtStrategy],
+	providers: [AuthService, JwtStrategy, MailService],
 	controllers: [AuthController],
 })
 export class PeopleModule {}

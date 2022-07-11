@@ -2,7 +2,7 @@
 
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { Repository } from "typeorm";
-import { UsersLoginDTO, UsersRegisterDTO } from "../dtos/Users.dto";
+import { UsersJwtDTO, UsersLoginDTO, UsersRegisterDTO } from "../dtos/Users.dto";
 import { UsersDB } from "../entity/Users.db";
 import { InjectRepository } from "@nestjs/typeorm";
 import * as bcrypt from "bcrypt";
@@ -48,6 +48,15 @@ export class AuthService {
 
 	public async allUsers() {
 		const info = await this.getUsers.find();
+
+		return info;
+	}
+
+	public async recoverUsers({ email }: UsersJwtDTO) {
+		const info = await this.getUsers.findOne({
+			where: { email },
+			select: { email: true, lastName: true },
+		});
 
 		return info;
 	}

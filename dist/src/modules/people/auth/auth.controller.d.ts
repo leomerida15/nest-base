@@ -1,11 +1,13 @@
 import { UsersLoginDTO, UsersRegisterDTO } from "../dtos/Users.dto";
+import { MailService } from "../mail/mail.service";
 import { AuthService } from "./auth.service";
 export declare class AuthController {
     private readonly authService;
-    constructor(authService: AuthService);
+    private readonly mailService;
+    constructor(authService: AuthService, mailService: MailService);
     registerUser(user: UsersRegisterDTO): Promise<{
         msg: string;
-        info: UsersRegisterDTO & import("../entity/Users.db").UsersDB;
+        info: UsersRegisterDTO;
         accesstoken: string;
     }>;
     loginUser(user: UsersLoginDTO): Promise<{

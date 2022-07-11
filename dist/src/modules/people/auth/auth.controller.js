@@ -18,14 +18,17 @@ const swagger_1 = require("@nestjs/swagger");
 const resp_dto_1 = require("../../../utils/resp.dto");
 const Users_dto_1 = require("../dtos/Users.dto");
 const jwt_auth_guard_1 = require("../guards/jwt/jwt-auth.guard");
+const mail_service_1 = require("../mail/mail.service");
 const auth_service_1 = require("./auth.service");
 let AuthController = class AuthController {
-    constructor(authService) {
+    constructor(authService, mailService) {
         this.authService = authService;
+        this.mailService = mailService;
     }
     async registerUser(user) {
-        const { info, accesstoken } = await this.authService.createUser(user);
-        return { msg: "register ok", info, accesstoken };
+        const { email } = user;
+        await this.mailService.addUser({ email });
+        return { msg: "register ok", info: user, accesstoken: "" };
     }
     async loginUser(user) {
         const { info, accesstoken } = await this.authService.validUser(user);
@@ -65,7 +68,8 @@ __decorate([
 AuthController = __decorate([
     (0, swagger_1.ApiTags)("auth"),
     (0, common_1.Controller)("auth"),
-    __metadata("design:paramtypes", [auth_service_1.AuthService])
+    __metadata("design:paramtypes", [auth_service_1.AuthService,
+        mail_service_1.MailService])
 ], AuthController);
 exports.AuthController = AuthController;
 //# sourceMappingURL=auth.controller.js.map

@@ -17,6 +17,7 @@ const Permissions_db_1 = require("./entity/Permissions.db");
 const config_1 = require("@nestjs/config");
 const jwt_strategy_1 = require("./guards/jwt/jwt.strategy");
 const jwt_1 = require("@nestjs/jwt");
+const mail_service_1 = require("./mail/mail.service");
 let PeopleModule = class PeopleModule {
 };
 PeopleModule = __decorate([
@@ -31,7 +32,7 @@ PeopleModule = __decorate([
                 }),
             }),
         ],
-        providers: [auth_service_1.AuthService, jwt_strategy_1.JwtStrategy],
+        providers: [auth_service_1.AuthService, jwt_strategy_1.JwtStrategy, mail_service_1.MailService],
         controllers: [auth_controller_1.AuthController],
     })
 ], PeopleModule);

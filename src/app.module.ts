@@ -9,7 +9,7 @@ import { TypeOrmModule, TypeOrmModuleOptions } from "@nestjs/typeorm";
 import { PeopleModule } from "./modules/people/people.module";
 import { PostModule } from "./modules/post/post.module";
 import { AdminModule } from "./modules/admin/admin.module";
-import { CoursesModule } from './modules/courses/courses.module';
+import { CoursesModule } from "./modules/courses/courses.module";
 
 @Module({
 	imports: [
