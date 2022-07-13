@@ -4,7 +4,7 @@ import { getRepositoryToken } from "@nestjs/typeorm";
 import { ConfigService } from "@nestjs/config";
 import { Test, TestingModule } from "@nestjs/testing";
 import { Repository } from "typeorm";
-import { UsersDB } from "../entity/Users.db";
+import { UsersDB } from "../entitys/Users.db";
 import { AuthService } from "./auth.service";
 import { JwtService } from "@nestjs/jwt";
 import * as bcrypt from "bcrypt";

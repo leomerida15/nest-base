@@ -7,9 +7,9 @@ import { AuthController } from "./auth/auth.controller";
 
 // DB
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { UsersDB } from "./entity/Users.db";
-import { RolsDB } from "./entity/Rols.db";
-import { PermissionsDB } from "./entity/Permissions.db";
+import { UsersDB } from "./entitys/Users.db";
+import { RolsDB } from "./entitys/Rols.db";
+import { PermissionsDB } from "./entitys/Permissions.db";
 
 // config
 import { ConfigService } from "@nestjs/config";
@@ -17,7 +17,7 @@ import { JwtStrategy } from "./guards/jwt/jwt.strategy";
 // JWT
 import { JwtModule } from "@nestjs/jwt";
 import { JwtConfig } from "src/config/types";
-import { MailService } from './mail/mail.service';
+import { MailService } from "./mail/mail.service";
 
 @Module({
 	imports: [
