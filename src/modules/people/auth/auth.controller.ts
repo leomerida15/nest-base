@@ -52,7 +52,9 @@ export class AuthController {
 	async recoverUser(user: UsersRecoverDTO) {
 		const { info, accesstoken } = await this.authService.validUserRecover(user);
 
-		this.mailService.sendRecover({ to: user });
+		const { email, firsName, lastName } = info;
+
+		await this.mailService.sendRecover({ to: { email, name: `${firsName} ${lastName}` } });
 
 		return { msg: "all users ok", info };
 	}

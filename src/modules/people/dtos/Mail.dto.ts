@@ -24,5 +24,5 @@ export class AddUserProps {
 
 export class sendRecoverProps {
 	@Transform(({ value }) => processTo(value))
-	to: SendSmtpEmailTo[];
+	to: SendSmtpEmailTo | SendSmtpEmailTo[];
 }
