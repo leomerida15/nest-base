@@ -19,8 +19,8 @@ import { getList } from "../functions/Name";
 		if (!validMo) new Error("mo is requier");
 
 		names.forEach((name) => {
-			const dirDB = path.join(path.resolve(), "src", "modules", mo, "entity", name);
-			const dirDTO = path.join(path.resolve(), "src", "modules", mo, "dto", name);
+			const dirDB = path.join(path.resolve(), "src", "modules", mo, "entitys", name);
+			const dirDTO = path.join(path.resolve(), "src", "modules", mo, "dtos", name);
 
 			exec(`pnpm typeorm entity:create ${dirDB}DB`, () => {
 				exec(`mv -f ${dirDB}DB.ts ${dirDB}.db.ts`);
@@ -39,6 +39,6 @@ import { getList } from "../functions/Name";
 			});
 		});
 	} catch (error) {
-		console.log("error", error);
+		console.log("error", error.message);
 	}
 })();

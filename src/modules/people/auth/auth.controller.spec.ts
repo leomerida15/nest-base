@@ -97,7 +97,7 @@ describe("AuthController", () => {
 
 			const resp = await authController.loginUser(data.ok.login);
 
-			expect(authService.validUser).toHaveBeenCalled();
+			expect(authService.validUserAuth).toHaveBeenCalled();
 			expect(resp).toEqual(result);
 		});
 

@@ -41,3 +41,9 @@ export class UsersJwtDTO extends BaseDTO {
 	@ApiProperty()
 	email: string;
 }
+
+export class UsersRecoverDTO {
+	@IsEmail()
+	@ApiProperty()
+	email: string;
+}

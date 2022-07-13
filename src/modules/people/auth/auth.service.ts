@@ -2,7 +2,7 @@
 
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { Repository } from "typeorm";
-import { UsersJwtDTO, UsersLoginDTO, UsersRegisterDTO } from "../dtos/Users.dto";
+import { UsersJwtDTO, UsersLoginDTO, UsersRecoverDTO, UsersRegisterDTO } from "../dtos/Users.dto";
 import { UsersDB } from "../entity/Users.db";
 import { InjectRepository } from "@nestjs/typeorm";
 import * as bcrypt from "bcrypt";
@@ -29,8 +29,9 @@ export class AuthService {
 		return { info, accesstoken };
 	}
 
-	public async validUser(user: UsersLoginDTO) {
+	public async validUserAuth(user: UsersLoginDTO) {
 		const { email } = user;
+
 		const userDB = await this.getUsers.findOne({ where: { email } });
 		if (!userDB) throw new HttpException("usern_not_found", HttpStatus.NOT_FOUND);
 
@@ -42,6 +43,23 @@ export class AuthService {
 
 		const { id } = info;
 		const accesstoken = this.jwtService.sign({ id });
+
+		return { info, accesstoken };
+	}
+
+	public async validUserRecover(user: UsersRecoverDTO) {
+		const { email } = user;
+
+		const userDB = await this.getUsers.findOne({
+			where: { email },
+			select: { email: true, id: true },
+		});
+		if (!userDB) throw new HttpException("usern_not_found", HttpStatus.NOT_FOUND);
+
+		const { id } = userDB;
+		const accesstoken = this.jwtService.sign({ id }, {
+			
+		});
 
 		return { info, accesstoken };
 	}
