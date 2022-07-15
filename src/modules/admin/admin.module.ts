@@ -2,14 +2,12 @@
 
 // MVC
 import { Module } from '@nestjs/common';
-import { AuthService } from './auth/auth.service';
-import { AuthController } from './auth/auth.controller';
 
 // DB
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UsersDB } from './entitys/Users.db';
-import { RolsDB } from './entitys/Rols.db';
-import { PermissionsDB } from './entitys/Permissions.db';
+import { UsersEntity } from './entitys/Users.db';
+import { RolsEntity } from './entitys/Rols.db';
+import { PermissionsEntity } from './entitys/Permissions.db';
 
 // config
 import { ConfigService } from '@nestjs/config';

@@ -7,9 +7,9 @@ import { AuthController } from './auth/auth.controller';
 
 // DB
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UsersDB } from './entitys/Users.db';
-import { RolsDB } from './entitys/Rols.db';
-import { PermissionsDB } from './entitys/Permissions.db';
+import { UsersEntity } from './entitys/Users.entity';
+import { RolsEntity } from './entitys/Rols.entity';
+import { PermissionsEntity } from './entitys/Permissions.entity';
 
 // config
 import { ConfigService } from '@nestjs/config';
@@ -21,7 +21,7 @@ import { MailService } from './mail/mail.service';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([UsersDB, RolsDB, PermissionsDB]),
+    TypeOrmModule.forFeature([UsersEntity, RolsEntity, PermissionsEntity]),
     JwtModule.registerAsync({
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({

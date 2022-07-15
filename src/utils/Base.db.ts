@@ -1,18 +1,22 @@
 /** @format */
 
-import { IsDate, IsUUID } from "class-validator";
-import { CreateDateColumn, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { IsDate, IsUUID } from 'class-validator';
+import {
+  CreateDateColumn,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
-export class BaseDB {
-	@PrimaryGeneratedColumn("uuid")
-	@IsUUID()
-	id?: string;
+export class BaseEntity {
+  @PrimaryGeneratedColumn('uuid')
+  @IsUUID()
+  id?: string;
 
-	@CreateDateColumn()
-	@IsDate()
-	createdDate?: Date;
+  @CreateDateColumn()
+  @IsDate()
+  createdDate?: Date;
 
-	@UpdateDateColumn()
-	@IsDate()
-	updatedDate?: Date;
+  @UpdateDateColumn()
+  @IsDate()
+  updatedDate?: Date;
 }

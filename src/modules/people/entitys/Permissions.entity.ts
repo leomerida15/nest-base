@@ -2,18 +2,18 @@
 
 import { Transform } from 'class-transformer';
 import { IsString } from 'class-validator';
-import { BaseDB } from '../../../utils/Base.db';
+import { BaseEntity } from '../../../utils/Base.db';
 import { Column, Entity, JoinTable, ManyToMany } from 'typeorm';
-import { RolsDB } from './Rols.db';
+import { RolsEntity } from './Rols.entity';
 
 @Entity()
-export class PermissionsDB extends BaseDB {
+export class PermissionsEntity extends BaseEntity {
   @Column()
   @IsString()
   @Transform((param) => String(param.value).toLowerCase())
   name: string;
 
-  @ManyToMany(() => RolsDB)
+  @ManyToMany(() => RolsEntity)
   @JoinTable()
-  rols?: RolsDB[];
+  rols?: RolsEntity[];
 }

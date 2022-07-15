@@ -1,17 +1,17 @@
 /** @format */
 
-import { IsDate, IsOptional, IsUUID } from "class-validator";
+import { IsDate, IsOptional, IsUUID } from 'class-validator';
 
 export class BaseDTO {
-	@IsOptional()
-	@IsUUID()
-	id?: string;
+  @IsOptional()
+  @IsUUID()
+  id?: string;
 
-	@IsOptional()
-	@IsDate()
-	createdDate?: Date;
+  @IsOptional()
+  @IsDate()
+  createdDate?: Date;
 
-	@IsOptional()
-	@IsDate()
-	updatedDate?: Date;
+  @IsOptional()
+  @IsDate()
+  updatedDate?: Date;
 }
