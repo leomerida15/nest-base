@@ -2,6 +2,7 @@
 
 import { Test, TestingModule } from "@nestjs/testing";
 import { UsersRegisterDTO } from "../dtos/Users.dto";
+import { MailService } from "../mail/mail.service";
 import { AuthController } from "./auth.controller";
 import { AuthService } from "./auth.service";
 
@@ -13,6 +14,7 @@ interface data {
 describe("AuthController", () => {
 	let authController: AuthController;
 	let authService: AuthService;
+	let mailService: MailService;
 
 	const data: data = {
 		ok: {
@@ -49,7 +51,13 @@ describe("AuthController", () => {
 					provide: AuthService,
 					useValue: {
 						createUser: jest.fn(async () => ({ info: data.ok.register, accesstoken: "" })),
-						validUser: jest.fn(async () => ({ info: data.ok.login, accesstoken: "" })),
+						validUserAuth: jest.fn(async () => ({ info: data.ok.login, accesstoken: "" })),
+					},
+				},
+				{
+					provide: MailService,
+					useValue: {
+						addUser: jest.fn(),
 					},
 				},
 			],
@@ -57,11 +65,16 @@ describe("AuthController", () => {
 
 		authController = module.get<AuthController>(AuthController);
 		authService = module.get<AuthService>(AuthService);
+		mailService = module.get<MailService>(MailService);
 	});
 
 	describe("defined mocks", () => {
 		it("authController should be defined", () => {
 			expect(authController).toBeDefined();
+		});
+
+		it("authController should be defined", () => {
+			expect(mailService).toBeDefined();
 		});
 
 		it("authService should be defined", () => {
@@ -103,7 +116,7 @@ describe("AuthController", () => {
 
 		it("valid error cicle", async () => {
 			try {
-				jest.spyOn(authService, "validUser").mockRejectedValue(new Error());
+				jest.spyOn(authService, "validUserAuth").mockRejectedValue(new Error());
 
 				await authController.registerUser(data.error.login);
 			} catch (error) {

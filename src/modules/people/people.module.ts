@@ -18,6 +18,8 @@ import { JwtStrategy } from "./guards/jwt/jwt.strategy";
 import { JwtModule } from "@nestjs/jwt";
 import { JwtConfig } from "src/config/types";
 import { MailService } from "./mail/mail.service";
+import { UsersController } from './users/users.controller';
+import { UsersService } from './users/users.service';
 
 @Module({
 	imports: [
@@ -30,7 +32,7 @@ import { MailService } from "./mail/mail.service";
 			}),
 		}),
 	],
-	providers: [AuthService, JwtStrategy, MailService],
-	controllers: [AuthController],
+	providers: [AuthService, JwtStrategy, MailService, UsersService],
+	controllers: [AuthController, UsersController],
 })
 export class PeopleModule {}

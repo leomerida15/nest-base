@@ -7,6 +7,10 @@ declare const _default: () => {
             name: string;
             email: string;
         };
+        jwtRecover: {
+            secret: string;
+            expiresIn: string;
+        };
     };
 };
 export default _default;

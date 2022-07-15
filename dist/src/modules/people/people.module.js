@@ -11,13 +11,15 @@ const common_1 = require("@nestjs/common");
 const auth_service_1 = require("./auth/auth.service");
 const auth_controller_1 = require("./auth/auth.controller");
 const typeorm_1 = require("@nestjs/typeorm");
-const Users_db_1 = require("./entity/Users.db");
-const Rols_db_1 = require("./entity/Rols.db");
-const Permissions_db_1 = require("./entity/Permissions.db");
+const Users_db_1 = require("./entitys/Users.db");
+const Rols_db_1 = require("./entitys/Rols.db");
+const Permissions_db_1 = require("./entitys/Permissions.db");
 const config_1 = require("@nestjs/config");
 const jwt_strategy_1 = require("./guards/jwt/jwt.strategy");
 const jwt_1 = require("@nestjs/jwt");
 const mail_service_1 = require("./mail/mail.service");
+const users_controller_1 = require("./users/users.controller");
+const users_service_1 = require("./users/users.service");
 let PeopleModule = class PeopleModule {
 };
 PeopleModule = __decorate([
@@ -32,8 +34,8 @@ PeopleModule = __decorate([
                 }),
             }),
         ],
-        providers: [auth_service_1.AuthService, jwt_strategy_1.JwtStrategy, mail_service_1.MailService],
-        controllers: [auth_controller_1.AuthController],
+        providers: [auth_service_1.AuthService, jwt_strategy_1.JwtStrategy, mail_service_1.MailService, users_service_1.UsersService],
+        controllers: [auth_controller_1.AuthController, users_controller_1.UsersController],
     })
 ], PeopleModule);
 exports.PeopleModule = PeopleModule;

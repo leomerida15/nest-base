@@ -17,29 +17,23 @@ let MailService = class MailService {
     constructor(configService) {
         this.configService = configService;
     }
-    processTo(to) {
-        if (Array.isArray(to))
-            return to;
-        return [to];
-    }
-    async addUser({ email }) {
+    async addUser({ email, firsName: FNAME, lastName: LNAME }) {
         let apiInstance = new sib_api_v3_typescript_1.ContactsApi();
         let apiKey = apiInstance.authentications["apiKey"];
         apiKey.apiKey = this.configService.get("mail").key;
-        let createContact = new sib_api_v3_typescript_1.CreateContact();
+        const createContact = new sib_api_v3_typescript_1.CreateContact();
         createContact.email = email;
         createContact.listIds = [2];
-        createContact.attributes = [2];
+        createContact.attributes = { FNAME, LNAME };
         await apiInstance.createContact(createContact);
     }
-    async sendRecover() {
+    async sendRecover({ to, token }) {
         let apiInstance = new sib_api_v3_typescript_1.default.TransactionalEmailsApi();
         let apiKey = apiInstance.authentications["apiKey"];
         apiKey.apiKey = this.configService.get("mail").key;
-        let sendSmtpEmail = new sib_api_v3_typescript_1.SendSmtpEmail();
-        sendSmtpEmail.subject = "My {{params.subject}}";
-        sendSmtpEmail.sender = { name: "John Doe", email: "example@example.com" };
-        sendSmtpEmail.to = [{ email: "example@example.com", name: "Jane Doe" }];
+        const sendSmtpEmail = new sib_api_v3_typescript_1.SendSmtpEmail();
+        sendSmtpEmail.to = to;
+        sendSmtpEmail.params = { token };
         sendSmtpEmail.templateId = 3;
         await apiInstance.sendTransacEmail(sendSmtpEmail);
     }

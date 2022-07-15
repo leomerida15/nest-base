@@ -1,18 +1,50 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { MailService } from './mail.service';
+/** @format */
 
-describe('MailService', () => {
-  let service: MailService;
+import { ConfigService } from "@nestjs/config";
+import { Test, TestingModule } from "@nestjs/testing";
+import { MailService } from "./mail.service";
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [MailService],
-    }).compile();
+describe("MailService", () => {
+	let mailService: MailService;
+	let configService: ConfigService;
 
-    service = module.get<MailService>(MailService);
-  });
+	beforeEach(async () => {
+		const module: TestingModule = await Test.createTestingModule({
+			providers: [
+				MailService,
+				{
+					provide: ConfigService,
+					useValue: {
+						get: (data: string) => {
+							if (data === "mail") {
+								return {
+									key: "",
+									sender: {
+										name: "",
+										email: "",
+									},
+									jwtRecover: {
+										secret: "",
+										expiresIn: "",
+									},
+								};
+							}
 
-  it('should be defined', () => {
-    expect(service).toBeDefined();
-  });
+							return null;
+						},
+					},
+				},
+			],
+		}).compile();
+
+		mailService = module.get<MailService>(MailService);
+	});
+
+	it("should be defined", () => {
+		expect(mailService).toBeDefined();
+	});
+
+	describe("test addUser", () => {
+		it("addUser ok", async () => {});
+	});
 });

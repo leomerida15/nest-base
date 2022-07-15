@@ -26,14 +26,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthService = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("typeorm");
-const Users_db_1 = require("../entity/Users.db");
+const Users_db_1 = require("../entitys/Users.db");
 const typeorm_2 = require("@nestjs/typeorm");
 const bcrypt = require("bcrypt");
 const jwt_1 = require("@nestjs/jwt");
+const config_1 = require("@nestjs/config");
 let AuthService = class AuthService {
-    constructor(getUsers, jwtService) {
+    constructor(getUsers, jwtService, configService) {
         this.getUsers = getUsers;
         this.jwtService = jwtService;
+        this.configService = configService;
     }
     async createUser(user) {
         user.password = bcrypt.hashSync(user.password, 10);
@@ -43,7 +45,7 @@ let AuthService = class AuthService {
         const accesstoken = this.jwtService.sign({ id });
         return { info, accesstoken };
     }
-    async validUser(user) {
+    async validUserAuth(user) {
         const { email } = user;
         const userDB = await this.getUsers.findOne({ where: { email } });
         if (!userDB)
@@ -56,8 +58,27 @@ let AuthService = class AuthService {
         const accesstoken = this.jwtService.sign({ id });
         return { info, accesstoken };
     }
+    async validUserRecover(user) {
+        const { email } = user;
+        const info = await this.getUsers.findOne({
+            where: { email },
+            select: { email: true, id: true },
+        });
+        if (!info)
+            throw new common_1.HttpException("usern_not_found", common_1.HttpStatus.NOT_FOUND);
+        const { id } = info;
+        const accesstoken = this.jwtService.sign({ id }, this.configService.get("mal").jwtRecover);
+        return { info, accesstoken };
+    }
     async allUsers() {
         const info = await this.getUsers.find();
+        return info;
+    }
+    async recoverUsers({ email }) {
+        const info = await this.getUsers.findOne({
+            where: { email },
+            select: { email: true, lastName: true },
+        });
         return info;
     }
 };
@@ -65,7 +86,8 @@ AuthService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_2.InjectRepository)(Users_db_1.UsersDB)),
     __metadata("design:paramtypes", [typeorm_1.Repository,
-        jwt_1.JwtService])
+        jwt_1.JwtService,
+        config_1.ConfigService])
 ], AuthService);
 exports.AuthService = AuthService;
 //# sourceMappingURL=auth.service.js.map

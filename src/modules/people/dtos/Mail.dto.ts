@@ -1,7 +1,15 @@
 /** @format */
 
 import { Transform } from "class-transformer";
-import { IsEmail, IsString } from "class-validator";
+import {
+	ArrayMaxSize,
+	ArrayMinSize,
+	IsArray,
+	IsEmail,
+	IsInstance,
+	IsJWT,
+	IsString,
+} from "class-validator";
 import { SendSmtpEmailTo } from "sib-api-v3-typescript";
 
 const processTo = (to: SendSmtpEmailTo | SendSmtpEmailTo[]): SendSmtpEmailTo[] => {
@@ -23,6 +31,12 @@ export class AddUserProps {
 }
 
 export class sendRecoverProps {
-	@Transform(({ value }) => processTo(value))
-	to: SendSmtpEmailTo | SendSmtpEmailTo[];
+	@IsArray()
+	@ArrayMinSize(1)
+	@ArrayMaxSize(1)
+	@IsInstance(SendSmtpEmailTo, { each: true })
+	to: SendSmtpEmailTo[];
+
+	@IsJWT()
+	token: string;
 }

@@ -1,9 +1,8 @@
 import { ConfigService } from "@nestjs/config";
-import { AddUserProps } from "../dtos/Mail.dto";
+import { AddUserProps, sendRecoverProps } from "../dtos/Mail.dto";
 export declare class MailService {
     private readonly configService;
-    private processTo;
     constructor(configService: ConfigService);
-    addUser({ email }: AddUserProps): Promise<void>;
-    sendRecover(): Promise<void>;
+    addUser({ email, firsName: FNAME, lastName: LNAME }: AddUserProps): Promise<void>;
+    sendRecover({ to, token }: sendRecoverProps): Promise<void>;
 }

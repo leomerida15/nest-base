@@ -1,6 +1,6 @@
 /** @format */
 
-import { Body, Controller, Get, HttpCode, HttpStatus, Post, Res, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, HttpCode, HttpStatus, Post, UseGuards } from "@nestjs/common";
 import { ApiBearerAuth, ApiBody, ApiTags, ApiOkResponse, getSchemaPath } from "@nestjs/swagger";
 import { RespDTO } from "../../../utils/resp.dto";
 import { UsersLoginDTO, UsersRecoverDTO, UsersRegisterDTO } from "../dtos/Users.dto";
@@ -31,6 +31,7 @@ export class AuthController {
 	}
 
 	@ApiBody({ type: UsersLoginDTO })
+	@ApiOkResponse({ status: HttpStatus.CREATED, schema: { $ref: getSchemaPath(RespDTO) } })
 	@Post("login")
 	async loginUser(@Body() user: UsersLoginDTO) {
 		const { info, accesstoken } = await this.authService.validUserAuth(user);
@@ -39,23 +40,19 @@ export class AuthController {
 	}
 
 	@ApiBearerAuth()
-	@UseGuards(JwtAuthGuard)
-	@Get("all")
-	async allUser() {
-		const info = await this.authService.allUsers();
-
-		return { msg: "all users ok", info };
-	}
-
-	@ApiBearerAuth()
-	@Get("all")
+	@ApiBody({ type: UsersRecoverDTO })
+	@ApiOkResponse({ status: HttpStatus.CREATED, schema: { $ref: getSchemaPath(RespDTO) } })
+	@Get("recover")
 	async recoverUser(user: UsersRecoverDTO) {
 		const { info, accesstoken } = await this.authService.validUserRecover(user);
 
 		const { email, firsName, lastName } = info;
 
-		await this.mailService.sendRecover({ to: { email, name: `${firsName} ${lastName}` } });
+		await this.mailService.sendRecover({
+			to: [{ email, name: `${firsName} ${lastName}` }],
+			token: accesstoken,
+		});
 
-		return { msg: "all users ok", info };
+		return { msg: "email recover ok" };
 	}
 }

@@ -12,3 +12,6 @@ export declare class UsersLoginDTO extends BaseDTO {
 export declare class UsersJwtDTO extends BaseDTO {
     email: string;
 }
+export declare class UsersRecoverDTO {
+    email: string;
+}

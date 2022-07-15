@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CoursesDB = void 0;
 const class_transformer_1 = require("class-transformer");
 const class_validator_1 = require("class-validator");
-const Users_db_1 = require("../../people/entity/Users.db");
+const Users_db_1 = require("../../people/entitys/Users.db");
 const Base_db_1 = require("../../../utils/Base.db");
 const typeorm_1 = require("typeorm");
 let CoursesDB = class CoursesDB extends Base_db_1.BaseDB {

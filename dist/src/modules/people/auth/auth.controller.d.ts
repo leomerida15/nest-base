@@ -1,4 +1,4 @@
-import { UsersLoginDTO, UsersRegisterDTO } from "../dtos/Users.dto";
+import { UsersLoginDTO, UsersRecoverDTO, UsersRegisterDTO } from "../dtos/Users.dto";
 import { MailService } from "../mail/mail.service";
 import { AuthService } from "./auth.service";
 export declare class AuthController {
@@ -7,7 +7,7 @@ export declare class AuthController {
     constructor(authService: AuthService, mailService: MailService);
     registerUser(user: UsersRegisterDTO): Promise<{
         msg: string;
-        info: UsersRegisterDTO;
+        info: UsersRegisterDTO & import("../entitys/Users.db").UsersDB;
         accesstoken: string;
     }>;
     loginUser(user: UsersLoginDTO): Promise<{
@@ -16,7 +16,7 @@ export declare class AuthController {
             email: string;
             firsName: string;
             lastName: string;
-            rol: number | import("../entity/Rols.db").RolsDB;
+            rol: number | import("../entitys/Rols.db").RolsDB;
             courses?: import("../../courses/entity/Courses.db").CoursesDB[];
             id?: string;
             createdDate?: Date;
@@ -24,8 +24,7 @@ export declare class AuthController {
         };
         accesstoken: string;
     }>;
-    allUser(): Promise<{
+    recoverUser(user: UsersRecoverDTO): Promise<{
         msg: string;
-        info: import("../entity/Users.db").UsersDB[];
     }>;
 }

@@ -15,8 +15,8 @@ const Name_1 = require("../functions/Name");
         if (!validMo)
             new Error("mo is requier");
         names.forEach((name) => {
-            const dirDB = path.join(path.resolve(), "src", "modules", mo, "entity", name);
-            const dirDTO = path.join(path.resolve(), "src", "modules", mo, "dto", name);
+            const dirDB = path.join(path.resolve(), "src", "modules", mo, "entitys", name);
+            const dirDTO = path.join(path.resolve(), "src", "modules", mo, "dtos", name);
             (0, child_process_1.exec)(`pnpm typeorm entity:create ${dirDB}DB`, () => {
                 (0, child_process_1.exec)(`mv -f ${dirDB}DB.ts ${dirDB}.db.ts`);
             });
@@ -31,7 +31,7 @@ const Name_1 = require("../functions/Name");
         });
     }
     catch (error) {
-        console.log("error", error);
+        console.log("error", error.message);
     }
 })();
 //# sourceMappingURL=entity.js.map

@@ -6,6 +6,10 @@ const mailConfig = () => ({
         name: process.env.MAIL_SENDER_NAME,
         email: process.env.MAIL_SENDER_EMAIL,
     },
+    jwtRecover: {
+        secret: process.env.MAIL_JWT_KEY,
+        expiresIn: process.env.MAIL_JWT_EXP,
+    },
 });
 exports.default = mailConfig;
 //# sourceMappingURL=mail.js.map

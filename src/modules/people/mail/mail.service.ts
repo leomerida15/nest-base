@@ -2,8 +2,6 @@
 
 import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { isArray } from "class-validator";
-
 import SibApiV3Sdk, {
 	SendSmtpEmailTo,
 	ContactsApi,
@@ -11,24 +9,6 @@ import SibApiV3Sdk, {
 	SendSmtpEmail,
 } from "sib-api-v3-typescript";
 import { AddUserProps, sendRecoverProps } from "../dtos/Mail.dto";
-
-// Configure API key authorization: apiKey
-
-// apiInstance.getAccount().then(
-// 	function (data) {
-// 		console.log("API called successfully. Returned data: ", data.body);
-// 	},
-// 	function (error) {
-// 		console.error(error);
-// 	},
-// );
-
-interface serdProps {
-	//
-	to: Array<SendSmtpEmailTo> | SendSmtpEmailTo;
-	//
-	params: object & { [ket: string]: any };
-}
 
 @Injectable()
 export class MailService {
@@ -42,7 +22,7 @@ export class MailService {
 
 		apiKey.apiKey = this.configService.get("mail").key;
 
-		let createContact = new CreateContact();
+		const createContact = new CreateContact();
 
 		createContact.email = email;
 		createContact.listIds = [2];
@@ -51,7 +31,7 @@ export class MailService {
 		await apiInstance.createContact(createContact);
 	}
 
-	async sendRecover({ to }: sendRecoverProps) {
+	async sendRecover({ to, token }: sendRecoverProps) {
 		let apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
 
 		// @ts-ignore
@@ -59,9 +39,10 @@ export class MailService {
 
 		apiKey.apiKey = this.configService.get("mail").key;
 
-		let sendSmtpEmail = new SendSmtpEmail();
+		const sendSmtpEmail = new SendSmtpEmail();
 
-		sendSmtpEmail.to = to;
+		sendSmtpEmail.to = to as SendSmtpEmailTo[];
+		sendSmtpEmail.params = { token };
 		sendSmtpEmail.templateId = 3;
 
 		await apiInstance.sendTransacEmail(sendSmtpEmail);

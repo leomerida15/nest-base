@@ -1,0 +1,71 @@
+declare const _default: {
+    name: string;
+    version: string;
+    description: string;
+    author: string;
+    private: boolean;
+    license: string;
+    scripts: {
+        prebuild: string;
+        build: string;
+        format: string;
+        start: string;
+        'start:dev': string;
+        'start:debug': string;
+        'start:prod': string;
+        lint: string;
+        test: string;
+        'test:watch': string;
+        'test:cov': string;
+        'test:debug': string;
+        'test:e2e': string;
+        typeorm: string;
+        'entity:create': string;
+        types: string;
+    };
+    dependencies: {
+        '@nestjs/common': string;
+        '@nestjs/core': string;
+        '@nestjs/platform-express': string;
+        'reflect-metadata': string;
+        rimraf: string;
+        rxjs: string;
+        shelljs: string;
+    };
+    devDependencies: {
+        '@nestjs/cli': string;
+        '@nestjs/schematics': string;
+        '@nestjs/testing': string;
+        '@types/express': string;
+        '@types/jest': string;
+        '@types/node': string;
+        '@types/supertest': string;
+        '@typescript-eslint/eslint-plugin': string;
+        '@typescript-eslint/parser': string;
+        eslint: string;
+        'eslint-config-prettier': string;
+        'eslint-plugin-prettier': string;
+        jest: string;
+        prettier: string;
+        'source-map-support': string;
+        supertest: string;
+        'ts-jest': string;
+        'ts-loader': string;
+        'ts-node': string;
+        'tsconfig-paths': string;
+        typescript: string;
+        '@types/shelljs': string;
+    };
+    jest: {
+        moduleFileExtensions: string[];
+        rootDir: string;
+        testRegex: string;
+        transform: {
+            '^.+\\.(t|j)s$': string;
+        };
+        collectCoverageFrom: string[];
+        coverageDirectory: string;
+        testEnvironment: string;
+    };
+};
+export default _default;

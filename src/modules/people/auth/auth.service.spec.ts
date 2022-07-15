@@ -55,6 +55,12 @@ describe("AuthService", () => {
 						save: jest.fn(() => data.ok.register),
 					},
 				},
+				{
+					provide: ConfigService,
+					useValue: {
+						save: jest.fn(() => data.ok.register),
+					},
+				},
 			],
 		}).compile();
 
@@ -107,11 +113,10 @@ describe("AuthService", () => {
 
 					jest.spyOn(getUsers, "save").mockRejectedValue(new Error("error for db"));
 
-					await authService.createUser(data.ok.register);
+					await authService.createUser(data.error.register as any);
 				} catch (error) {
-					console.log("error", error);
 					expect(error).toBeInstanceOf(Error);
-					expect(error.message).toBeInstanceOf("error for db");
+					expect(error.message).toBe("error for db");
 				}
 			});
 		});
