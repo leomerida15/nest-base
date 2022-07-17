@@ -1,10 +1,10 @@
 /** @format */
 
 import { Transform } from 'class-transformer';
-import { IsEmail, IsString } from 'class-validator';
+import { IsEmail, IsNumber, IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
-import { BaseDTO } from '../../../utils/dto/Base.dto';
-import { IsPass } from '../../../utils/decorations';
+import { BaseDTO } from '../../../common/dto/Base.dto';
+import { IsPass } from '../../../common/decorations';
 
 export class UsersRegisterDTO extends BaseDTO {
   @IsEmail()
@@ -50,4 +50,12 @@ export class UsersRecoverDTO {
   @IsEmail()
   @ApiProperty()
   email: string;
+}
+
+export class UsersAllDTO {
+  @IsNumber()
+  skip: number;
+
+  @IsNumber()
+  take: number;
 }

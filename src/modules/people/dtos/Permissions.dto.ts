@@ -2,7 +2,7 @@
 
 import { Transform } from 'class-transformer';
 import { IsArray, IsInstance, IsOptional, IsString } from 'class-validator';
-import { BaseDTO } from 'src/utils/dto/Base.dto';
+import { BaseDTO } from 'src/common/dto/Base.dto';
 import { RolsEntity } from '../entitys/Rols.entity';
 
 export class PermissionsDTO extends BaseDTO {

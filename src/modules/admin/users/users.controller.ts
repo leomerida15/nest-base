@@ -7,8 +7,8 @@ import {
   ApiOkResponse,
   getSchemaPath,
 } from '@nestjs/swagger';
-import { RespDTO } from '../../../utils/resp.dto';
-import { JwtAuthGuard } from '../../people/guards/jwt/jwt-auth.guard';
+import { RespDTO } from '../../../common/resp.dto';
+import { JwtAuthGuard } from '../../../common/guards/jwt/jwt-auth.guard';
 import { UsersService } from './users.service';
 
 @ApiTags('auth')

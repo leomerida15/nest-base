@@ -37,8 +37,8 @@ import { getList } from '../functions/Name';
         name,
       );
 
-      exec(`pnpm typeorm entity:create ${dirDB}DB`, () => {
-        exec(`mv -f ${dirDB}Entiry.ts ${dirDB}.entiry.ts`);
+      exec(`pnpm typeorm entity:create ${dirEntity}DB`, () => {
+        exec(`mv -f ${dirEntity}Entiry.ts ${dirEntity}.entiry.ts`);
       });
 
       exec(`pnpm typeorm entity:create ${dirDTO}DTO`, () => {

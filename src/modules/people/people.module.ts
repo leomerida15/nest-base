@@ -13,7 +13,7 @@ import { PermissionsEntity } from './entitys/Permissions.entity';
 
 // config
 import { ConfigService } from '@nestjs/config';
-import { JwtStrategy } from './guards/jwt/jwt.strategy';
+import { JwtStrategy } from '../../common/guards/jwt/jwt.strategy';
 // JWT
 import { JwtModule } from '@nestjs/jwt';
 import { JwtConfig } from 'src/config/types';

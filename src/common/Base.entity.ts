@@ -12,11 +12,11 @@ export class BaseEntity {
   @IsUUID()
   id?: string;
 
-  @CreateDateColumn()
+  @CreateDateColumn({ select: false })
   @IsDate()
   createdDate?: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({ select: false })
   @IsDate()
   updatedDate?: Date;
 }

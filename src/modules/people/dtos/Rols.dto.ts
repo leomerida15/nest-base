@@ -1,6 +1,6 @@
 import { Transform } from 'class-transformer';
 import { IsArray, IsInstance, IsOptional, IsString } from 'class-validator';
-import { BaseDTO } from 'src/utils/dto/Base.dto';
+import { BaseDTO } from 'src/common/dto/Base.dto';
 import { PermissionsEntity } from '../entitys/Permissions.entity';
 import { UsersEntity } from '../entitys/Users.entity';
 

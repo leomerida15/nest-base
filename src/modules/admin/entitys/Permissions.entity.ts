@@ -3,7 +3,7 @@
 import { Transform } from 'class-transformer';
 import { IsString } from 'class-validator';
 import { BaseEntity } from '../../../common/Base.entity';
-import { Column, Entity, ManyToMany } from 'typeorm';
+import { Column, Entity, JoinTable, ManyToMany } from 'typeorm';
 import { RolsEntity } from './Rols.entity';
 
 @Entity()
@@ -14,5 +14,6 @@ export class PermissionsEntity extends BaseEntity {
   name: string;
 
   @ManyToMany(() => RolsEntity)
+  @JoinTable()
   rols?: RolsEntity[];
 }

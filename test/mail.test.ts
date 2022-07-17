@@ -2,7 +2,8 @@
 
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import {
+import SibApiV3Sdk, {
+  SendSmtpEmailTo,
   ContactsApi,
   CreateContact,
   SendSmtpEmail,
@@ -13,11 +14,13 @@ interface Instance {
   setApiKey: (apiKey: number, key: string) => void;
 }
 
-@Injectable()
 export class MailService {
   private ApiInstance<C>(onInstance: new () => Instance & C): C {
     const resp = new onInstance();
-    resp.setApiKey(0, this.configService.get('mail').key);
+    resp.setApiKey(
+      0,
+      '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',
+    );
 
     return resp;
   }
@@ -32,7 +35,7 @@ export class MailService {
     return initClass;
   }
 
-  constructor(private readonly configService: ConfigService) {}
+  // constructor() {}
 
   public async addUser({ email, firsName: NOMBRE, lastName: APELLIDOS }) {
     const apiInstance = this.ApiInstance<ContactsApi>(ContactsApi);
@@ -52,9 +55,9 @@ export class MailService {
     const data = {
       to,
       params: {
-        recoverUrl: this.configService.get('mail').recoverUrl(token),
+        url: `http://localhost:5000/auth/recover/${token}`,
       },
-      templateId: this.configService.get('mail').templateId,
+      templateId: 3,
     };
 
     const sendSmtpEmail = this.defineBody<SendSmtpEmail>(SendSmtpEmail, data);
@@ -62,3 +65,10 @@ export class MailService {
     await apiInstance.sendTransacEmail(sendSmtpEmail);
   }
 }
+
+const mailService = new MailService();
+
+mailService.sendRecover({
+  to: [{ email: 'leomerida15@gmail.com', name: 'test' }],
+  token: 'token',
+});
